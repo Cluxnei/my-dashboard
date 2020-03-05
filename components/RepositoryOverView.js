@@ -17,7 +17,7 @@ export default ({repository}) => {
     const {
         name, description, forks_count, homepage, language,
         stargazers_count, watchers_count, languages_url, created_at,
-        updated_at, pushed_at
+        updated_at, pushed_at, full_name
     } = repository;
     const handleHomepagePress = () => homepage ? Linking.openURL(homepage) : false;
     const screenWidth = Dimensions.get('screen').width;
@@ -53,7 +53,7 @@ export default ({repository}) => {
             legendFontColor: "#7F7F7F",
             legendFontSize: 15
         })));
-        setLastCommits((await (await fetch(commits.replace('repository', name))).json()).slice(0, 4));
+        setLastCommits((await (await fetch(commits.replace('USER/REPOSITORY', full_name))).json()).slice(0, 4));
         setIsPerformingAnyAction(false);
     };
     const formatDate = (date) => {

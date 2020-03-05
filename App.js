@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {repositories} from "./api";
+import {users} from "./api";
 import Dashboard from './screens/Dashboard';
 import * as S from './components/styled/App';
 
@@ -8,7 +9,16 @@ export default () => {
     const [gitRepositories, setGitRepositories] = useState([]);
     const [owners, setOwners] = useState([]);
     const loadRepositories = async () => {
-        const repos = await (await fetch(repositories)).json();
+        let repos = [];
+        console.log(users);
+        for (const user of users) {
+            console.log(user, repos);
+            repos = [
+                ...repos,
+                ...(await (await fetch(repositories.replace('USER', user))).json())
+            ];
+            console.log(repos);
+        }
         const uniqueOwners = [];
         repos.forEach(({owner}) => {
             const {id, login, avatar_url, html_url} = owner;
