@@ -8,8 +8,8 @@ export default () => {
     const [gitRepositories, setGitRepositories] = useState([]);
     const loadRepositories = async () => {
         const repos = await (await fetch(repositories)).json();
-        console.log(repos);
         setGitRepositories(repos);
+        console.log(repos);
         setIsPerformingAnyAction(false);
     };
     useEffect(() => {
