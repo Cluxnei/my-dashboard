@@ -11,6 +11,7 @@ import pushed from '../assets/push.png';
 import updated from '../assets/update.png';
 import created from '../assets/create.png';
 import {getRandomColor} from "../constrants/Colors";
+import {commits} from "../api";
 
 export default ({repository}) => {
     const {
@@ -37,6 +38,7 @@ export default ({repository}) => {
         }
     };
     const [pieData, setPieData] = useState(undefined);
+    const [lastCommits, setLastCommits] = useState(undefined);
     const [isPerformingAnyAction, setIsPerformingAnyAction] = useState(true);
     const loadLanguages = async () => {
         const repositoryLanguages = await (await fetch(languages_url)).json();
@@ -51,6 +53,7 @@ export default ({repository}) => {
             legendFontColor: "#7F7F7F",
             legendFontSize: 15
         })));
+        setLastCommits((await (await fetch(commits.replace('repository', name))).json()).slice(0, 4));
         setIsPerformingAnyAction(false);
     };
     const formatDate = (date) => {
@@ -118,6 +121,16 @@ export default ({repository}) => {
                     <S.Value>{formatDate(created_at).split(' ')[0]}</S.Value>
                 </S.Date>
             </S.DatesContainer>
+            <S.LastCommitsContainer>
+                <S.Commit>
+                    <S.CommitTitle>Last 4 commits messages</S.CommitTitle>
+                </S.Commit>
+                {isPerformingAnyAction ? <S.Login/> : lastCommits.map(commit => (
+                    <S.Commit key={commit.sha}>
+                        <S.Message>{commit.commit.message}</S.Message>
+                    </S.Commit>
+                ))}
+            </S.LastCommitsContainer>
         </S.Container>
     );
 };

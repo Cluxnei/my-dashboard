@@ -40,6 +40,7 @@ export const Value = styled.Text`
   font-size: 20px;
   margin: 0 10px;
   color: #fff;
+  ${({bold}) => bold ? 'font-weight: bold;' : ''}
 `;
 export const RowContainer = styled.View`
   flex-direction: row;
@@ -69,4 +70,24 @@ export const DatesContainer = styled.View`
 `;
 export const Date = styled.View`
   flex-direction: row;
+`;
+export const LastCommitsContainer = styled.View`
+  align-items: flex-start;
+  padding: 20px 0;
+`;
+export const Commit = styled.View`
+  background-color: rgba(35, 0, 255, 0.3);
+  width: 100%;
+  border-bottom-width: 0.2px;
+  border-bottom-color: #f1f;
+`;
+export const Message = styled.Text`
+  color: #fff;
+  font-size: 16px;
+  margin-left: 10px;
+  padding: 10px 0;
+`;
+export const CommitTitle = styled(Value)`
+  font-weight: bold;
+  padding: 15px 0;
 `;
