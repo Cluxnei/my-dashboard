@@ -11,13 +11,12 @@ import pushed from '../assets/push.png';
 import updated from '../assets/update.png';
 import created from '../assets/create.png';
 import {getRandomColor} from "../constrants/Colors";
-import {commits} from "../api";
 
 export default ({repository}) => {
     const {
         name, description, forks_count, homepage, language,
-        stargazers_count, watchers_count, languages_url, created_at,
-        updated_at, pushed_at, full_name
+        stargazers_count, watchers_count, created_at,
+        updated_at, pushed_at, lastFourCommits, repositoryLanguages
     } = repository;
     const handleHomepagePress = () => homepage ? Linking.openURL(homepage) : false;
     const screenWidth = Dimensions.get('screen').width;
@@ -41,7 +40,6 @@ export default ({repository}) => {
     const [lastCommits, setLastCommits] = useState(undefined);
     const [isPerformingAnyAction, setIsPerformingAnyAction] = useState(true);
     const loadLanguages = async () => {
-        const repositoryLanguages = await (await fetch(languages_url)).json();
         const languages = Object.keys(repositoryLanguages);
         const bytes = Object.values(repositoryLanguages);
         const totalBytes = bytes.reduce((acc, byte) => acc + byte, 0);
@@ -53,7 +51,7 @@ export default ({repository}) => {
             legendFontColor: "#7F7F7F",
             legendFontSize: 15
         })));
-        setLastCommits((await (await fetch(commits.replace('USER/REPOSITORY', full_name))).json()).slice(0, 4));
+        setLastCommits(lastFourCommits);
         setIsPerformingAnyAction(false);
     };
     const formatDate = (date) => {

@@ -7,6 +7,7 @@ export const Container = styled.View`
 `;
 export const RepositoryContainer = styled.ScrollView`
   flex: 1;
+  color: #fff;
 `;
 export const OwnersContainer = styled.View`
   flex-direction: row;
