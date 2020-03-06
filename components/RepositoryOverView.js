@@ -21,9 +21,9 @@ export default ({repository}) => {
     const handleHomepagePress = () => homepage ? Linking.openURL(homepage) : false;
     const screenWidth = Dimensions.get('screen').width;
     const chartConfig = {
-        backgroundColor: "#e26a00",
-        backgroundGradientFrom: "#fb8c00",
-        backgroundGradientTo: "#ffa726",
+        backgroundColor: '#e26a00',
+        backgroundGradientFrom: '#fb8c00',
+        backgroundGradientTo: '#ffa726',
         decimalPlaces: 2, // optional, defaults to 2dp
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,

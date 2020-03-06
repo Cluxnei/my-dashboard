@@ -3,12 +3,14 @@ import * as S from '../components/styled/Dashboard';
 import RepositoryOverView from "../components/RepositoryOverView";
 import {Linking, RefreshControl} from "react-native";
 
-export default ({repositories, owners}) => {
+export default ({repositories, owners, refresh}) => {
     const handleOwnerPress = (url) => Linking.openURL(url);
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = useCallback(() => {
         setRefreshing(true);
-        setRefreshing(false);
+        refresh().then(() => {
+            setRefreshing(false);
+        });
     }, [refreshing]);
 
     return (

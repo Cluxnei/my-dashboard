@@ -10,12 +10,12 @@ export default () => {
     const [isPerformingAnyAction, setIsPerformingAnyAction] = useState(true);
     const [gitRepositories, setGitRepositories] = useState([]);
     const [owners, setOwners] = useState([]);
-    const loadRepositories = async (previusRepositories) => {
+    const loadRepositories = async (previousRepositories) => {
         let repos = [];
         let reposWithCommits = [];
-        if (previusRepositories) {
+        if (previousRepositories) {
             console.log('nao fez fetch');
-            reposWithCommits = previusRepositories;
+            reposWithCommits = previousRepositories;
         } else {
             console.log('fez fetch na api');
             for (const user of users) {
@@ -53,6 +53,9 @@ export default () => {
         setGitRepositories(reposWithCommits.sort(({id}, b) => b.id - id));
         setIsPerformingAnyAction(false);
     };
+    const refresh = async () => {
+        return loadRepositories(false);
+    };
     const syncStorage = async () => {
         const storageRepositories = await getData('dr');
         if (storageRepositories) {
@@ -62,8 +65,7 @@ export default () => {
     };
     useEffect(() => {
         syncStorage().then();
-        // loadRepositories().then();
     }, []);
 
-    return (isPerformingAnyAction ? <S.Loader size="large" /> : <Dashboard repositories={gitRepositories} owners={owners} />);
+    return (isPerformingAnyAction ? <S.Loader size="large" /> : <Dashboard refresh={refresh} repositories={gitRepositories} owners={owners} />);
 };
