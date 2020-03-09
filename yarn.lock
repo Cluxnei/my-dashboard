@@ -4408,6 +4408,16 @@ react-native-chart-kit@^5.1.1:
     paths-js "^0.4.10"
     point-in-polygon "^1.0.1"
 
+react-native-input-prompt@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-input-prompt/-/react-native-input-prompt-1.0.0.tgz#06e858436156f206065f33ef3b2d971fd312db0f"
+  integrity sha512-xDXMD80KiJWb3sWQZpcsRfE5ZFTDXhwZPUmBPQNSvYI5l+0M4l5usHMcNNWubKZCL4Vg152cnEMtLLpjqRxAYg==
+
+react-native-prompt@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-prompt/-/react-native-prompt-1.0.0.tgz#41e0ec2aa7dd8f12f3a3ee83af9d63c4b670f8a1"
+  integrity sha1-QeDsKqfdjxLzo+6Dr51jxLZw+KE=
+
 react-native-svg-charts@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/react-native-svg-charts/-/react-native-svg-charts-5.3.0.tgz#00ce3a043594e3c5e283f7496a44ab455c834a51"

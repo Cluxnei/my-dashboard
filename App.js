@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {repositories, commits} from "./api";
-import {users} from "./api";
+import {initialUsers} from "./api";
 import Dashboard from './screens/Dashboard';
 import * as S from './components/styled/App';
 import {getData, storeData} from "./storage";
@@ -10,6 +10,7 @@ export default () => {
     const [isPerformingAnyAction, setIsPerformingAnyAction] = useState(true);
     const [gitRepositories, setGitRepositories] = useState([]);
     const [owners, setOwners] = useState([]);
+    const [users, setUsers] = useState(initialUsers);
     const loadRepositories = async (previousRepositories) => {
         let repos = [];
         let reposWithCommits = [];
@@ -40,8 +41,8 @@ export default () => {
                     });
                 }
             })();
-            await storeData('dr', JSON.stringify(reposWithCommits));
         }
+        await storeData('dr', JSON.stringify(reposWithCommits));
         const uniqueOwners = [];
         reposWithCommits.forEach(({owner}) => {
             const {id, login, avatar_url, html_url} = owner;
@@ -53,7 +54,12 @@ export default () => {
         setGitRepositories(reposWithCommits.sort(({id}, b) => b.id - id));
         setIsPerformingAnyAction(false);
     };
-    const refresh = async () => {
+    const refresh = async (newUser = '') => {
+        if (newUser && !owners.includes(newUser)) {
+            const newUserRepositories = await (await fetch(repositories.replace('USER', newUser))).json();
+            // TODO pegar os commits e o resto das coisas
+            return loadRepositories([...gitRepositories, ...newUserRepositories]);
+        }
         return loadRepositories(false);
     };
     const syncStorage = async () => {
@@ -67,5 +73,5 @@ export default () => {
         syncStorage().then();
     }, []);
 
-    return (isPerformingAnyAction ? <S.Loader size="large" /> : <Dashboard refresh={refresh} repositories={gitRepositories} owners={owners} />);
+    return (isPerformingAnyAction ? <S.Loader size="large" /> : <Dashboard setUsers={setUsers} users={users} refresh={refresh} repositories={gitRepositories} owners={owners} />);
 };
